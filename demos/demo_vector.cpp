@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <vector.hpp>
+#include "../src/vector.hpp"
 
 namespace bla = ASC_bla;
 
@@ -16,7 +16,7 @@ int main()
       y(i) = 10;
     }
 
-  bla::Vector<double> z = x+y;
+  bla::Vector<double> z = x-y;
   
-  std::cout << "x+y = " << z << std::endl;
+  std::cout << "x-y = " << z << std::endl;
 }
