@@ -109,6 +109,70 @@ namespace ASC_bla
     return ost;
   }
 
+    // Matrix-Multiplikation
+    template <typename T>
+    Matrix<T> operator*(const Matrix<T>& a, const Matrix<T>& b)
+    {
+      assert(a.Cols() == b.Rows() && "Matrix dimensions must be compatible for multiplication");
+      Matrix<T> result(a.Rows(), b.Cols());
+      for (size_t i = 0; i < a.Rows(); ++i)
+        for (size_t j = 0; j < b.Cols(); ++j)
+        {
+          T sum = T();
+          for (size_t k = 0; k < a.Cols(); ++k)
+            sum += a(i, k) * b(k, j);
+          result(i, j) = sum;
+        }
+      return result;
+    }
+
+    //Matrix Inverse
+    template <typename T>
+    Matrix<T> Inverse(const Matrix<T>& m)
+      {
+        assert(m.Rows() == m.Cols() && "Matrix must be square to compute its inverse");
+        size_t n = m.Rows();
+        Matrix<T> augmented(n, 2 * n);
+
+        // New Matrix to use Gauß-Algorithm, with id
+        for (size_t i = 0; i < n; ++i)
+          for (size_t j = 0; j < n; ++j)
+          {
+            augmented(i, j) = m(i, j);
+            augmented(i, j + n) = (i == j) ? T(1) : T(0);
+          }
+
+        // Gauß-Algorithmus
+        for (size_t i = 0; i < n; ++i)
+        {
+          // Look for pivot (non zero in current column)
+          T pivot = augmented(i, i);
+          assert(pivot != T(0) && "Matrix is singular and cannot be inverted");
+
+          for (size_t j = 0; j < 2 * n; ++j)
+            augmented(i, j) /= pivot;
+
+          // elim other entries in curr col
+          for (size_t k = 0; k < n; ++k)
+          {
+            if (k != i)
+            {
+              T factor = augmented(k, i);
+              for (size_t j = 0; j < 2 * n; ++j)
+                augmented(k, j) -= factor * augmented(i, j);
+            }
+          }
+        }
+
+        // end gauss by extracting inv
+        Matrix<T> inverse(n, n);
+        for (size_t i = 0; i < n; ++i)
+          for (size_t j = 0; j < n; ++j)
+            inverse(i, j) = augmented(i, j + n);
+
+        return inverse;
+      }
+
 } // namespace ASC_bla
 
 #endif
