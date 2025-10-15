@@ -16,12 +16,11 @@ int main()
       y(i) = 10;
     }
 
-  bla::Vector<double> z = x-y;
+  bla::Vector<double> z1 = x-y;
+  bla::Vector<double> z2 = x+y;
   
-<<<<<<< HEAD
-  std::cout << "x-y = " << z << std::endl;
-=======
-  std::cout << "x+y = " << z << std::endl;
+  std::cout << "x-y = " << z1 << std::endl;
+  std::cout << "x+y = " << z2 << std::endl;
   
   std::cout << "type of (x+3*y) is  " << typeid(x+3*y).name() << std::endl;
 
@@ -35,5 +34,4 @@ int main()
   x.slice(1,5) = 10;
   
   std::cout << "x = " << x << std::endl;  
->>>>>>> expr
 }

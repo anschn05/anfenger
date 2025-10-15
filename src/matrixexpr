@@ -1,0 +1,181 @@
+#ifndef FILE_MATRIX
+#define FILE_MATRIX
+
+#include <iostream>
+#include <cassert>
+#include "vecexpr.hpp"
+#include "vector.hpp"
+
+namespace ASC_bla
+{
+
+  // ----------------------------------------------------------
+  // MatrixView: View auf vorhandene Daten (nicht owning)
+  // ----------------------------------------------------------
+  template <typename T, typename TDIST = std::integral_constant<size_t,1>>
+  class MatrixView
+  {
+  protected:
+    T* m_data;
+    size_t m_nrows;
+    size_t m_ncols;
+    size_t m_rowdist;  // Abstand zwischen Zeilen
+    size_t m_coldist;  // Abstand zwischen Spalten (typischerweise 1)
+
+  public:
+    MatrixView() = default;
+    MatrixView(const MatrixView&) = default;
+
+    MatrixView(size_t nrows, size_t ncols, T* data)
+      : m_data(data), m_nrows(nrows), m_ncols(ncols),
+        m_rowdist(ncols), m_coldist(1) { }
+
+    MatrixView(size_t nrows, size_t ncols,
+               size_t rowdist, size_t coldist, T* data)
+      : m_data(data), m_nrows(nrows), m_ncols(ncols),
+        m_rowdist(rowdist), m_coldist(coldist) { }
+
+    T* data() const { return m_data; }
+    size_t Rows() const { return m_nrows; }
+    size_t Cols() const { return m_ncols; }
+
+    T& operator()(size_t i, size_t j)
+    {
+      return m_data[i*m_rowdist + j*m_coldist];
+    }
+
+    const T& operator()(size_t i, size_t j) const
+    {
+      return m_data[i*m_rowdist + j*m_coldist];
+    }
+
+    // Ganze Zeile als VectorView
+    auto Row(size_t i) const
+    {
+      assert(i < m_nrows);
+      return VectorView<T,size_t>(m_ncols, m_coldist, m_data + i*m_rowdist);
+    }
+
+    // Ganze Spalte als VectorView
+    auto Col(size_t j) const
+    {
+      assert(j < m_ncols);
+      return VectorView<T,size_t>(m_nrows, m_rowdist, m_data + j*m_coldist);
+    }
+
+    // Zuweisung von Skalar
+    MatrixView& operator=(T scal)
+    {
+      for (size_t i = 0; i < m_nrows; i++)
+        for (size_t j = 0; j < m_ncols; j++)
+          (*this)(i,j) = scal;
+      return *this;
+    }
+
+    // Zuweisung aus anderer MatrixView oder MatExpr
+    template <typename MB>
+    MatrixView& operator=(const MB& m2)
+    {
+      assert(m_nrows == m2.Rows() && m_ncols == m2.Cols());
+      for (size_t i = 0; i < m_nrows; i++)
+        for (size_t j = 0; j < m_ncols; j++)
+          (*this)(i,j) = m2(i,j);
+      return *this;
+    }
+
+    // Teilmatrix (Subview)
+    auto Range(size_t i0, size_t i1, size_t j0, size_t j1) const
+    {
+      assert(i0 <= i1 && i1 <= m_nrows);
+      assert(j0 <= j1 && j1 <= m_ncols);
+      return MatrixView<T,size_t>(
+        i1 - i0, j1 - j0, m_rowdist, m_coldist, m_data + i0*m_rowdist + j0*m_coldist);
+    }
+
+  };
+
+
+  // ----------------------------------------------------------
+  // Matrix: eigener Speicher
+  // ----------------------------------------------------------
+  template <typename T>
+  class Matrix : public MatrixView<T>
+  {
+    using BASE = MatrixView<T>;
+    using BASE::m_data;
+    using BASE::m_nrows;
+    using BASE::m_ncols;
+    using BASE::m_rowdist;
+    using BASE::m_coldist;
+
+  public:
+    Matrix(size_t nrows, size_t ncols)
+      : MatrixView<T>(nrows, ncols, new T[nrows*ncols])
+    {
+      m_rowdist = ncols;
+      m_coldist = 1;
+    }
+
+    Matrix(const Matrix& m)
+      : Matrix(m.Rows(), m.Cols())
+    {
+      *this = m;
+    }
+
+    Matrix(Matrix&& m) noexcept
+      : MatrixView<T>(0, 0, nullptr)
+    {
+      std::swap(m_data, m.m_data);
+      std::swap(m_nrows, m.m_nrows);
+      std::swap(m_ncols, m.m_ncols);
+      std::swap(m_rowdist, m.m_rowdist);
+      std::swap(m_coldist, m.m_coldist);
+    }
+
+    ~Matrix() { delete[] m_data; }
+
+    using BASE::operator=;
+
+    Matrix& operator=(const Matrix& m2)
+    {
+      assert(m_nrows == m2.m_nrows && m_ncols == m2.m_ncols);
+      for (size_t i = 0; i < m_nrows; i++)
+        for (size_t j = 0; j < m_ncols; j++)
+          (*this)(i,j) = m2(i,j);
+      return *this;
+    }
+
+    Matrix& operator=(Matrix&& m2) noexcept
+    {
+      std::swap(m_data, m2.m_data);
+      std::swap(m_nrows, m2.m_nrows);
+      std::swap(m_ncols, m2.m_ncols);
+      std::swap(m_rowdist, m2.m_rowdist);
+      std::swap(m_coldist, m2.m_coldist);
+      return *this;
+    }
+  };
+
+
+  // ----------------------------------------------------------
+  // Operator<< für Ausgabe
+  // ----------------------------------------------------------
+  template <typename ...Args>
+  std::ostream& operator<<(std::ostream& ost, const MatrixView<Args...>& M)
+  {
+    for (size_t i = 0; i < M.Rows(); i++)
+    {
+      ost << "[";
+      if (M.Cols() > 0)
+        ost << M(i,0);
+      for (size_t j = 1; j < M.Cols(); j++)
+        ost << ", " << M(i,j);
+      ost << "]";
+      if (i+1 < M.Rows()) ost << "\n";
+    }
+    return ost;
+  }
+
+}
+
+#endif
