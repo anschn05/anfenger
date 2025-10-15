@@ -19,4 +19,6 @@ int main()
   bla::Vector<double> z = x-y;
   
   std::cout << "x-y = " << z << std::endl;
+
+
 }

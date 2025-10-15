@@ -9,17 +9,17 @@ namespace ASC_bla
   template <typename T>
   class Vector
   {
-    size_t size;
+    size_t size;  // size_t...Datentyp (wie int), aber speziell für Indizes 
     T * data;
     
   public:
     Vector (size_t _size) 
-      : size(_size), data(new T[size]) { ; }
+      : size(_size), data(new T[size]) { ; }  //alles nach Doppelpunkt: "size" wird mit _size gesetzt; "data" wird auf T mit Länge size gestellt
     
-    Vector (const Vector & v)
-      : Vector(v.Size())
+    Vector (const Vector & v) 
+      : Vector(v.Size())      // ✅ ruft den anderen Konstruktor auf!
     {
-      *this = v;
+      *this = v;              // kopiert danach die Daten
     }
 
     Vector (Vector && v)
