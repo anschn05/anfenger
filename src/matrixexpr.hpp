@@ -68,7 +68,31 @@ namespace ASC_bla
     assert(A.cols() == B.rows());
     return MulMatExpr(A.derived(), B.derived());
   }
-  
+
+   // ***************** Multiplication of vector and Matrix *****************
+     template <typename TV, typename TM>
+   class VecMatMulExpr : public MatExpr<VecMatMulExpr<TV,TM>>
+   {
+     TV v;
+     TM m;
+   public:
+     VecMatMulExpr (TV _v, TM _m) : v(_v), m(_m) { }
+
+     auto operator() (size_t i, size_t j) const {
+       using ElemV = decltype(std::declval<TV>()(size_t{}));
+       using ElemM = decltype(std::declval<TM>()(size_t{}, size_t{}));
+       using ProdT = decltype(std::declval<ElemV>() * std::declval<ElemM>());
+
+       ProdT sum = ProdT();
+       for (size_t k = 0; k < m.rows(); ++k)
+         sum += v(k) * m(k,j);
+       return sum;
+     }
+
+     size_t rows() const { return 1; }
+     size_t cols() const { return m.cols(); }
+   };
+
   // output operator
   template <typename T>
   std::ostream & operator<< (std::ostream & ost, const MatExpr<T> & m)
