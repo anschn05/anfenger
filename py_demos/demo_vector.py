@@ -1,10 +1,14 @@
-# search for libraray like bla.cpython-312-darwin.so in the build directory:
-# import sys
-# sys.path.append('/Users/joachim/texjs/lva/ws2324/ScientificComputing/ASC-bla/build')
-# from bla import Vector
+# search for library like bla.cpython-312-x86_64-linux-gnu.so in the build directory:
+import sys
+import os
+
+# Add the build directory to Python path
+build_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'build')
+sys.path.append(build_path)
+from bla import Vector
 
 # import from the installed ASCsoft package:
-from ASCsoft.bla import Vector
+#from ASCsoft.bla import Vector
 
 x = Vector(3)
 y = Vector(3)
