@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <utility> // for std::declval
 
 namespace ASC_bla
 {
@@ -36,18 +37,37 @@ namespace ASC_bla
     return SumMatExpr(A.derived(), B.derived());
   }
 
-  //  ***************** multiplication of two matrices *****************
+  //  ***************** multiplication of two matrices (matrix product) *****************
   template <typename TA, typename TB>
-    class MulMatExpr : public MatExpr<MulMatExpr<TA,TB>>
+  class MulMatExpr : public MatExpr<MulMatExpr<TA,TB>>
   {
     TA A;
     TB B;
   public:
-  //MulMatExpr (TA _A, TB _B) : A(_A), B(_B) { }
-   // auto operator() (size_t i, size_t j) const { return A(i,j) * B(i,j); }
-   // size_t rows() const { return A.rows(); }
-   // size_t cols() const { return A.cols(); }
+    MulMatExpr (TA _A, TB _B) : A(_A), B(_B) { }
+
+    // element (i,j) = sum_k A(i,k) * B(k,j)
+    auto operator() (size_t i, size_t j) const {
+      using ElemA = decltype(std::declval<TA>()(size_t{}, size_t{}));
+      using ElemB = decltype(std::declval<TB>()(size_t{}, size_t{}));
+      using SumT = decltype(std::declval<ElemA>() * std::declval<ElemB>());
+
+      SumT sum = SumT();
+      for (size_t k = 0; k < A.cols(); ++k)
+        sum += A(i,k) * B(k,j);
+      return sum;
+    }
+
+    size_t rows() const { return A.rows(); }
+    size_t cols() const { return B.cols(); }
   };
+
+  template <typename TA, typename TB>
+  auto operator* (const MatExpr<TA> & A, const MatExpr<TB> & B)
+  {
+    assert(A.cols() == B.rows());
+    return MulMatExpr(A.derived(), B.derived());
+  }
   
   // output operator
   template <typename T>

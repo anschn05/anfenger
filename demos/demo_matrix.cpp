@@ -10,6 +10,6 @@ int main() {
       B(i,j) = i-j;
     }
 
-  auto C = A + B;
-  std::cout << "A:\n" << A << "\n\nB:\n" << B << "\n\nA+B:\n" << C << std::endl;
+  auto C = A * B;
+  std::cout << "A:\n" << A << "\n\nB:\n" << B << "\n\nA*B:\n" << C << std::endl;
 }
