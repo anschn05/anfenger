@@ -3,12 +3,13 @@
 
 #include <iostream>
 #include <cassert>
+#include "matrixexpr.hpp"
 #include "vector.hpp"
 
 namespace ASC_bla
 {
-  template <typename T, typename TDIST = std::integral_constant<size_t,1>>
-  class MatrixView
+  template <typename T, typename TDIST = size_t>
+  class MatrixView : public MatExpr<MatrixView<T,TDIST>>
   {
   protected:
     T* m_data;
@@ -30,11 +31,15 @@ namespace ASC_bla
     MatrixView(size_t rows, size_t cols, TDIST rowdist, T* data)
       : m_data(data), m_rows(rows), m_cols(cols), m_rowdist(rowdist) { }
 
-    // Zugriff
-    T* data() const { return m_data; }
-    size_t Rows() const { return m_rows; }
-    size_t Cols() const { return m_cols; }
-    auto rowdist() const { return m_rowdist; }
+  // Zugriff
+  T* data() const { return m_data; }
+  // lowercase accessors for expression compatibility
+  size_t rows() const { return m_rows; }
+  size_t cols() const { return m_cols; }
+  // retained capitalized accessors for older code
+  size_t Rows() const { return m_rows; }
+  size_t Cols() const { return m_cols; }
+  auto rowdist() const { return m_rowdist; }
 
     // Elementzugriff (zeilenweise Speicherung)
     T& operator()(size_t i, size_t j) { return m_data[i*m_rowdist + j]; }
