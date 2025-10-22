@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: ASCsoft
+Version: 0.0.2
+Author: J. Schoeberl
+License: MIT
+License-File: LICENSE
+Dynamic: author
+Dynamic: license
+Dynamic: license-file
