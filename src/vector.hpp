@@ -82,7 +82,6 @@ namespace ASC_bla
     {
       *this = v;
     }
-
     Vector (Vector && v)
       : VectorView<T> (0, nullptr)
     {
@@ -120,7 +119,6 @@ namespace ASC_bla
   template <typename ...Args>
   std::ostream & operator<< (std::ostream & ost, const VectorView<Args...> & v)
   {
-<<<<<<< HEAD
     Vector<T> sum(a.Size());
     for (size_t i = 0; i < a.Size(); i++)
       sum(i) = a(i)+b(i);
@@ -140,9 +138,6 @@ namespace ASC_bla
   std::ostream & operator<< (std::ostream & ost, const Vector<T> & v)
   {
     if (v.Size() > 0)
-=======
-    if (v.size() > 0)
->>>>>>> expr
       ost << v(0);
     for (size_t i = 1; i < v.size(); i++)
       ost << ", " << v(i);
