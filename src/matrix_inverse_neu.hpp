@@ -177,7 +177,7 @@ namespace ASC_bla
   public:
     // Konstruktor
     Matrix(size_t _nrows, size_t _ncols)
-      : nrows(_nrows), ncols(_ncols), data(new T[_nrows * _ncols]) { }  // ?
+      : nrows(_nrows), ncols(_ncols), data(new T[_nrows * _ncols]()) { }  // ?
 
     // Copy-Konstruktor
     Matrix(const Matrix& m)
@@ -285,7 +285,27 @@ namespace ASC_bla
       return result;
     }
 
-
+    template <typename T>
+    size_t FindPivot(const Matrix<T>& mat, size_t col, size_t start_row, double tolerance = 1e-12) 
+    {
+        size_t pivot_row = start_row;
+        T max_val = std::abs(mat(start_row, col));
+        
+        // looks vor biggest entry -> best suited for division
+        for (size_t i = start_row + 1; i < mat.Rows(); ++i) {
+        T current_val = std::abs(mat(i, col));
+        if (current_val > max_val) {
+            max_val = current_val;
+            pivot_row = i;
+        }
+        }
+        // Überprüfung auf Singularität
+        if (max_val < tolerance) {
+        throw std::runtime_error("Matrix is singular - zero column detected");
+        }
+        
+        return pivot_row;
+    }
 
     //Matrix Inverse
     template <typename T>
@@ -303,26 +323,41 @@ namespace ASC_bla
             augmented(i, j + n) = (i == j) ? T(1) : T(0);
           }
 
+    
         // Gauß-Algorithmus
         for (size_t i = 0; i < n; ++i)
         {
-          // Look for pivot (non zero in current column)   
-          T pivot = augmented(i, i);
-          assert(pivot != T(0) && "Matrix is singular and cannot be inverted");
 
-          for (size_t j = 0; j < 2 * n; ++j)
-            augmented(i, j) /= pivot;
+            size_t pivot_row = i;
 
-          // elim other entries in curr col
-          for (size_t k = 0; k < n; ++k)
-          {
-            if (k != i)
-            {
-              T factor = augmented(k, i);
-              for (size_t j = 0; j < 2 * n; ++j)
-                augmented(k, j) -= factor * augmented(i, j);
+            if (std::abs(augmented(i,i))<1e-12){
+                pivot_row = FindPivot(augmented,i,i);
             }
-          }
+            // swaps rows
+            if (pivot_row != i){
+                for(size_t j=0; j<2*n;++j){
+                    std::swap(augmented(i,j),augmented(pivot_row,j));
+                }
+            }
+            
+            T pivot = augmented(i, i);
+
+            // checks a second time if not singular - already happend in FindPivot()
+            assert(std::abs(pivot)>=1e-12 && "Matrix is singular and cannot be inverted");
+
+            for (size_t j = 0; j < 2 * n; ++j)
+                augmented(i, j) /= pivot;
+
+            // elim other entries in curr col
+            for (size_t k = 0; k < n; ++k)
+            {
+                if (k != i)
+                {
+                T factor = augmented(k, i);
+                for (size_t j = 0; j < 2 * n; ++j)
+                    augmented(k, j) -= factor * augmented(i, j);
+                }
+            }
         }
 
 

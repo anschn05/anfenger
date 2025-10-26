@@ -1,11 +1,11 @@
 #include <iostream>
-#include "../src/matrix.hpp"
+#include "../src/matrix_inverse_neu.hpp"
 using namespace ASC_bla;
 
 int main() {
   Matrix<double> A(2, 2), B(2, 2);
   for (size_t i = 0; i < 2; i++)
-    for (size_t j = 0; j < 3; j++) {
+    for (size_t j = 0; j < 2; j++) {
       A(i,j) = i + j;
       B(i,j) = i-j;
     }
