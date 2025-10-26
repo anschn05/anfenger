@@ -1,3 +1,34 @@
 build
 _build
 
+# CMake / build
+build/
+_skbuild/
+CMakeFiles/
+CMakeCache.txt
+cmake-build-*/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+ASCsoft/
+
+# Binaries
+*.dll
+*.lib
+*.exp
+*.pdb
+*.obj
+*.o
+*.so
+*.dylib
+*.a
+*.log
+
+# IDE
+.vscode/
+.vs/
