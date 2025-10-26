@@ -64,7 +64,6 @@ namespace ASC_bla
       
   };
   
-  
 
   
   template <typename T>

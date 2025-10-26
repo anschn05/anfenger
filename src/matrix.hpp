@@ -80,7 +80,7 @@ namespace ASC_bla
     }
   };
 
-
+/*
   template <typename T>
   class Matrix : public MatrixView<T>
   {
@@ -154,7 +154,7 @@ namespace ASC_bla
 }
 
 #endif
-
+*/
 
 /*
 #ifndef FILE_MATRIX
@@ -166,7 +166,7 @@ namespace ASC_bla
 
 namespace ASC_bla
 {
-
+*/
   template <typename T>
   class Matrix
   {
@@ -335,5 +335,5 @@ namespace ASC_bla
 } // namespace ASC_bla
 
 #endif
-*/
+
 

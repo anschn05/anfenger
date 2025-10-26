@@ -28,6 +28,7 @@ ASCsoft/
 *.dylib
 *.a
 *.log
+*.exe
 
 # IDE
 .vscode/
