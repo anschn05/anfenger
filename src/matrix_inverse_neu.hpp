@@ -177,7 +177,7 @@ namespace ASC_bla
   public:
     // Konstruktor
     Matrix(size_t _nrows, size_t _ncols)
-      : nrows(_nrows), ncols(_ncols), data(new T[_nrows * _ncols]()) { }  // ?
+      : nrows(_nrows), ncols(_ncols), data(new T[_nrows * _ncols]) { }  // ?
 
     // Copy-Konstruktor
     Matrix(const Matrix& m)
