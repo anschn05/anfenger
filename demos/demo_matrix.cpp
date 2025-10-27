@@ -4,8 +4,8 @@ using namespace ASC_bla;
 
 int main() {
   Matrix<double> A(2, 2), B(2, 2);
-  for (size_t i = 0; i < 2; i++)
-    for (size_t j = 0; j < 2; j++) {
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 2; j++) {
       A(i,j) = i + j;
       B(i,j) = i-j;
     }
