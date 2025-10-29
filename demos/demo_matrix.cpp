@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../src/matrix_inverse_neu.hpp"
+#include "../src/matrix.hpp"
 using namespace ASC_bla;
 
 int main() {
