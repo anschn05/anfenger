@@ -64,7 +64,6 @@ namespace ASC_bla
       
   };
   
-  
 
   
   template <typename T>
@@ -116,32 +115,56 @@ namespace ASC_bla
   };
 
 
-  template <typename ...Args>
+  /*template <typename ...Args>
   std::ostream & operator<< (std::ostream & ost, const VectorView<Args...> & v)
   {
     Vector<T> sum(a.Size());
     for (size_t i = 0; i < a.Size(); i++)
       sum(i) = a(i)+b(i);
     return sum;
-  }
+  }*/
+
+    // Addition
+    template <typename T>
+    Vector<T> operator+ (const Vector<T> & a, const Vector<T> & b)
+    {
+      assert(a.size() == b.size());
+      Vector<T> sum(a.size());
+      for (size_t i = 0; i < a.size(); i++)
+        sum(i) = a(i) + b(i);
+      return sum;
+    }
+
+
+template <typename ...Args>
+std::ostream & operator<< (std::ostream & ost, const VectorView<Args...> & v)
+{
+  if (v.size() > 0)
+    ost << v(0);
+  for (size_t i = 1; i < v.size(); i++)
+    ost << ", " << v(i);
+  return ost;
+}
+
 
   template <typename T>
   Vector<T> operator- (const Vector<T> & a, const Vector<T> & b)
   {
-    Vector<T> minus(a.Size());
-    for (size_t i = 0; i < a.Size(); i++)
-      minus(i) = a(i)-b(i);
-    return minus;
+      assert(a.size() == b.size());
+      Vector<T> minus(a.size());
+      for (size_t i = 0; i < a.size(); i++)
+        minus(i) = a(i) - b(i);
+      return minus;
   }
   
   template <typename T>
   std::ostream & operator<< (std::ostream & ost, const Vector<T> & v)
   {
-    if (v.Size() > 0)
-      ost << v(0);
-    for (size_t i = 1; i < v.size(); i++)
-      ost << ", " << v(i);
-    return ost;
+      if (v.size() > 0)
+        ost << v(0);
+      for (size_t i = 1; i < v.size(); i++)
+        ost << ", " << v(i);
+      return ost;
   }
   
 }

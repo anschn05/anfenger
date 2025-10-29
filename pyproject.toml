@@ -1,0 +1,17 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "scikit-build>=0.13",
+    "cmake>=3.18",
+    "pybind11"
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "ASCsoft"
+version = "0.0.2"
+description = "A demo package"
+authors = [{name = "Joachim Schoeberl"}]
+license = {text = "LGPL-2.1"}
+requires-python = ">=3.6"
