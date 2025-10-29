@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../src/vector.hpp"
+#include <vector.hpp>
 
 namespace bla = ASC_bla;
 
@@ -16,11 +16,9 @@ int main()
       y(i) = 10;
     }
 
-  bla::Vector<double> z1 = x-y;
-  bla::Vector<double> z2 = x+y;
+  bla::Vector<double> z = x+y;
   
-  std::cout << "x-y = " << z1 << std::endl;
-  std::cout << "x+y = " << z2 << std::endl;
+  std::cout << "x+y = " << z << std::endl;
   
   std::cout << "type of (x+3*y) is  " << typeid(x+3*y).name() << std::endl;
 
