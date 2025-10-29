@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(ASC_bla)
 
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 14)
 
 include_directories(src)
 
@@ -23,4 +23,6 @@ pybind11_add_module(bla src/bind_bla.cpp)
 install (TARGETS bla DESTINATION ASCsoft)
 install (FILES src/vector.hpp DESTINATION ASCsoft/include)
 
-
+find_package(LAPACK REQUIRED)
+add_executable (test_lapack tests/test_lapack.cc)
+target_link_libraries (test_lapack PUBLIC ${LAPACK_LIBRARIES})
