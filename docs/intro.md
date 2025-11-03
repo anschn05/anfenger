@@ -1,4 +1,4 @@
-# Welcome to ASC-bla's documentation!
+# Welcome to anfenger's documentation!
 
 
 ASC-bla is a C++ library for basic linear algebra operations.
