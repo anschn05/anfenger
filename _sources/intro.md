@@ -1,7 +1,6 @@
-# Welcome to anfenger's bloedsinn!
+# Welcome to anfenger's project!
 
-
-ASC-bla is a C++ library for basic linear algebra operations.
+We are trying to build a C++ library for basic linear algebra operations.
 The library provides template classes **Vector** and **Matrix**.
 
 ## Installation

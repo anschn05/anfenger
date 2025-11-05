@@ -6,7 +6,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Search - Introduction to Scientific Computing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>using pybind to apply C++ libraries also in Python &#8212; Introduction to Scientific Computing</title>
   
   
   
@@ -57,12 +59,9 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js?v=afe5de03"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'search';</script>
-  <script src="_static/searchtools.js"></script>
-  <script src="_static/language_data.js"></script>
-  <script src="searchindex.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'pybind_explanation';</script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" />
+    <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -94,7 +93,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
-      action="#"
+      action="search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -229,6 +228,54 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/pybind_explanation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
@@ -271,42 +318,100 @@ document.write(`
 </div>
               
               
-  <div class="bd-search-container">
-    <h1>Search</h1>
-    <noscript>
-      <div class="admonition error">
-        <p class="admonition-title">Error</p>
-        <p>Please activate JavaScript to enable the search functionality.</p>
-      </div>
-    </noscript>
-    
-<form class="bd-search d-flex align-items-center"
-      action="#"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search this book..."
-         aria-label="Search this book..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-    <div id="search-results"></div>
-  </div>
-  <script>
-    // Activate the search field on page load
-    let searchInput = document.querySelector("form.bd-search input");
-    if (searchInput) {
-        searchInput.focus();
-        searchInput.select();
-        console.log("[PST]: Set focus on search field.");
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>using pybind to apply C++ libraries also in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="using-pybind-to-apply-c-libraries-also-in-python">
+<h1>using pybind to apply C++ libraries also in Python<a class="headerlink" href="#using-pybind-to-apply-c-libraries-also-in-python" title="Link to this heading">#</a></h1>
+<p>There is also the possibility to use these libraries in python.
+This happens with pybind.</p>
+<p>The file, which manages the “translation” is “bind_bla.cpp” in ‘src’</p>
+<p>So if you want to use the library in a python code, you need to install a few things and follow the instructions of <a class="reference external" href="https://jschoeberl.github.io/IntroSC/basiclinalg/bla-python2.html">Python bindings</a></p>
+<p>and then run the following commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cmake -S . -B build -G &quot;Visual Studio 17 2022&quot;
+cd build
+cmake --build .
+</pre></div>
+</div>
+<p>To implement the library in your code, use something like this - according to your path of course:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># search for libraray like bla.cpython-312-darwin.so in the build directory:
+import sys
+sys.path.append(r&quot;C:\Users\ansch\OneDrive\Dokumente\Uni\SciComp\anfenger\build\Debug&quot;)
+from bla import Vector
+
+# import from the installed ASCsoft package:
+#from ASCsoft.bla import Vector
+</pre></div>
+</div>
+<p>An example code, would then look like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># search for libraray like bla.cpython-312-darwin.so in the build directory:
+import sys
+sys.path.append(r&quot;C:\Users\ansch\OneDrive\Dokumente\Uni\SciComp\anfenger\build\Debug&quot;)
+from bla import Vector
+
+# import from the installed ASCsoft package:
+#from ASCsoft.bla import Vector
+
+x = Vector(3)
+y = Vector(3)
+
+for i in range(len(x)):
+    x[i] = i
+y[:] = 2    
+
+print (&quot;x =&quot;, x)
+print (&quot;y =&quot;, y)
+print (&quot;x+3*y =&quot;, x+3*y)
+
+
+x = Vector(10)
+x[0:] = 1
+print (x)
+
+x[3:7] = 2
+print (x)
+
+x[0:10:2] = 3
+print (x)
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
     }
-  </script>
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
 
               
               
