@@ -1,7 +1,6 @@
 # search for libraray like bla.cpython-312-darwin.so in the build directory:
 import sys
-#sys.path.append('/Users/joachim/texjs/lva/ws2324/ScientificComputing/ASC-bla/build')
-sys.path.append(r"C:\Users\Emanuel\Uni\Sci-Comp\anfenger\build\Debug")
+sys.path.append(r"C:\Users\ansch\OneDrive\Dokumente\Uni\SciComp\anfenger\build\Debug")
 from bla import Vector
 
 # import from the installed ASCsoft package:

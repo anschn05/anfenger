@@ -4,6 +4,9 @@
 format: jb-book
 root: intro.md
 
+chapters:
+- file: pybind_explanation
+- file: libraries_explanation
 
 
 

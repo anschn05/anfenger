@@ -1,5 +1,8 @@
 build
 _build
+_sources
+_sphinx_design_static
+_static
 
 # CMake / build
 build/
