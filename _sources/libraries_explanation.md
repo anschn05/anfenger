@@ -8,9 +8,8 @@
 
 The most important functions are:
 
-- for Vectors:
+for Vectors:
 
-    # example code
     x = Vector(3)           # creates Vector with length 3
     y = Vector(3)
     y[:] = 2                # y = [2,2,2]

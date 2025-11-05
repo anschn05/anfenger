@@ -172,7 +172,6 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="pybind_explanation.html">Using pybind to apply C++ libraries also in Python</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">How to use the libraries and functions</a></li>
-
 </ul>
 
     </div>
@@ -336,13 +335,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">How to use the libraries and functions</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#right-now-there-are-the-following-header-files">Right now there are the following header-files:</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code">example code</a></li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -364,22 +358,20 @@ document.write(`
 <li><p>vector.hpp</p></li>
 </ul>
 <p>The most important functions are:</p>
-<ul class="simple">
-<li><p>for Vectors:</p></li>
-</ul>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="example-code">
-<h1>example code<a class="headerlink" href="#example-code" title="Link to this heading">#</a></h1>
-<p>x = Vector(3)           # creates Vector with length 3
+<p>for Vectors:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x = Vector(3)           # creates Vector with length 3
 y = Vector(3)
 y[:] = 2                # y = [2,2,2]
 x[1] = 0
-x[2:3] = 1              # x = [0,1,1]</p>
-<p>x+y                     # adds two vectors
+x[2:3] = 1              # x = [0,1,1] 
+
+x+y                     # adds two vectors
 x-y                     # substracts two vectors
-print(“x =”,x)          # prints: x = 1,2,3
-y[:] = 2                # changes y to [2,2,2]</p>
+print(&quot;x =&quot;,x)          # prints: x = 1,2,3
+y[:] = 2                # changes y to [2,2,2]
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -437,13 +429,8 @@ y[:] = 2                # changes y to [2,2,2]</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">How to use the libraries and functions</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#right-now-there-are-the-following-header-files">Right now there are the following header-files:</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code">example code</a></li>
-</ul>
-
   </nav></div>
 
 </div></div>
