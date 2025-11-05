@@ -5,6 +5,63 @@
 
 namespace ASC_bla
 {
+ 
+  template <typename T, typename TDIST = std::integral_constant<size_t,1> >
+  class VectorView : public VecExpr<VectorView<T,TDIST>>
+  {
+  protected:
+    T * m_data;
+    size_t m_size;
+    TDIST m_dist;
+  public:
+    VectorView() = default;
+    VectorView(const VectorView &) = default;
+    
+    template <typename TDIST2>
+    VectorView (const VectorView<T,TDIST2> & v2)
+      : m_data(v2.data()), m_size(v2.Size()), m_dist(v2.dist()) { }
+    
+    VectorView (size_t size, T * data)
+      : m_data(data), m_size(size) { }
+    
+    VectorView (size_t size, TDIST dist, T * data)
+      : m_data(data), m_size(size), m_dist(dist) { }
+    
+    template <typename TB>
+    VectorView & operator= (const VecExpr<TB> & v2)
+    {
+      assert (m_size == v2.size());
+      for (size_t i = 0; i < m_size; i++)
+        m_data[m_dist*i] = v2(i);
+      return *this;
+    }
+
+    VectorView & operator= (T scal)
+    {
+      for (size_t i = 0; i < m_size; i++)
+        m_data[m_dist*i] = scal;
+      return *this;
+    }
+
+    T * data() const { return m_data; }
+    size_t size() const { return m_size; }
+    auto dist() const { return m_dist; }
+    
+    T & operator()(size_t i) { return m_data[m_dist*i]; }
+    const T & operator()(size_t i) const { return m_data[m_dist*i]; }
+    
+    auto range(size_t first, size_t next) const {
+      assert(first <= next && next <= m_size);
+      return VectorView(next-first, m_dist, m_data+first*m_dist);
+    }
+
+    auto slice(size_t first, size_t slice) const {
+      return VectorView<T,size_t> (m_size/slice, m_dist*slice, m_data+first*m_dist);
+    }
+      
+  };
+  
+
   
   template <typename T>
   class Vector
@@ -21,7 +78,6 @@ namespace ASC_bla
     {
       *this = v;              // kopiert danach die Daten
     }
-
     Vector (Vector && v)
       : size(0), data(nullptr)
     {
