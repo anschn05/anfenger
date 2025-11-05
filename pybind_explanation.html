@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>using pybind to apply C++ libraries also in Python &#8212; Introduction to Scientific Computing</title>
+    <title>Using pybind to apply C++ libraries also in Python &#8212; Introduction to Scientific Computing</title>
   
   
   
@@ -171,7 +171,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">using pybind to apply C++ libraries also in Python</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Using pybind to apply C++ libraries also in Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="libraries_explanation.html">How to use the libraries and functions</a></li>
 </ul>
 
@@ -324,7 +324,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>using pybind to apply C++ libraries also in Python</h1>
+    <h1>Using pybind to apply C++ libraries also in Python</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -339,10 +339,10 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="using-pybind-to-apply-c-libraries-also-in-python">
-<h1>using pybind to apply C++ libraries also in Python<a class="headerlink" href="#using-pybind-to-apply-c-libraries-also-in-python" title="Link to this heading">#</a></h1>
+<h1>Using pybind to apply C++ libraries also in Python<a class="headerlink" href="#using-pybind-to-apply-c-libraries-also-in-python" title="Link to this heading">#</a></h1>
 <p>There is also the possibility to use these libraries in python.
-This happens with pybind.</p>
-<p>The file, which manages the “translation” is “bind_bla.cpp” in ‘src’</p>
+This happens with <strong>pybind</strong>.</p>
+<p>The file, which manages the “translation” is <em>bind_bla.cpp</em> in ‘src’</p>
 <p>So if you want to use the library in a python code, you need to install a few things and follow the instructions of <a class="reference external" href="https://jschoeberl.github.io/IntroSC/basiclinalg/bla-python2.html">Python bindings</a></p>
 <p>and then run the following commands:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cmake -S . -B build -G &quot;Visual Studio 17 2022&quot;
@@ -350,7 +350,7 @@ cd build
 cmake --build .
 </pre></div>
 </div>
-<p>To implement the library in your code, use something like this - according to your path of course:</p>
+<p>To implement the library in your code, use something like this - <em>according to your path of course</em>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># search for libraray like bla.cpython-312-darwin.so in the build directory:
 import sys
 sys.path.append(r&quot;C:\Users\ansch\OneDrive\Dokumente\Uni\SciComp\anfenger\build\Debug&quot;)

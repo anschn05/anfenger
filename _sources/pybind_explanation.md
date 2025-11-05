@@ -1,9 +1,9 @@
-# using pybind to apply C++ libraries also in Python
+# Using pybind to apply C++ libraries also in Python
 
 There is also the possibility to use these libraries in python. 
-This happens with pybind. 
+This happens with **pybind**.
 
-The file, which manages the "translation" is "bind_bla.cpp" in 'src'
+The file, which manages the "translation" is *bind_bla.cpp* in 'src'
 
 So if you want to use the library in a python code, you need to install a few things and follow the instructions of [Python bindings](https://jschoeberl.github.io/IntroSC/basiclinalg/bla-python2.html)
 
@@ -14,7 +14,7 @@ and then run the following commands:
     cmake --build .
 
 
-To implement the library in your code, use something like this - according to your path of course: 
+To implement the library in your code, use something like this - *according to your path of course*:
 
     # search for libraray like bla.cpython-312-darwin.so in the build directory:
     import sys
