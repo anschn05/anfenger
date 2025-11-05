@@ -21,6 +21,7 @@ find_package(pybind11 CONFIG REQUIRED)
 
 
 add_subdirectory (demos)
+add_subdirectory (tests)
 
 if(WIN32)
    file (DOWNLOAD https://sourceforge.net/projects/openblas/files/v0.3.24/OpenBLAS-0.3.24-x64.zip/download "${CMAKE_BINARY_DIR}/openblas.zip" EXPECTED_MD5 fc08fe8c0dc7364da115d0e09b5a134f)
@@ -32,28 +33,8 @@ endif()
 
 
 find_package(LAPACK REQUIRED)
-add_executable (test_lapack demos/test_lapack.cpp)
-target_link_libraries (test_lapack PUBLIC LAPACK::LAPACK)
-
 
 pybind11_add_module(bla src/bind_bla.cpp)
 
 install (TARGETS bla DESTINATION ASCsoft)
 install (FILES src/vector.hpp DESTINATION ASCsoft/include)
-
-<<<<<<< HEAD
-find_package(LAPACK REQUIRED)
-add_executable (test_lapack tests/test_lapack.cc)
-target_link_libraries (test_lapack PUBLIC ${LAPACK_LIBRARIES})
-=======
-
-# Copy openblas dll file to build directory (no need to set PATH)
-if(WIN32)
-    add_custom_command(TARGET test_lapack POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      "${CMAKE_BINARY_DIR}/openblas/bin/libopenblas.dll"
-      $<TARGET_FILE_DIR:test_lapack>
-    )
-endif()
-
->>>>>>> upstream/lapack

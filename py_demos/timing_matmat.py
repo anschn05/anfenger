@@ -1,5 +1,12 @@
-from ngsolve import *
+#from ngsolve import *
+import sys
+import os
 from time import time
+
+build_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'build')
+sys.path.append(build_path)
+
+from bla import Matrix
 
 n = 1
 

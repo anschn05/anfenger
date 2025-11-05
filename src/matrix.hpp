@@ -378,6 +378,25 @@ namespace ASC_bla
     return y;
   }
 
+  // Matrix * Matrix -> Matrix
+  template <typename T>
+  Matrix<T> operator*(const MatrixView<T>& A, const MatrixView<T>& B) {
+    assert(A.cols() == B.rows());
+    Matrix<T> C(A.rows(), B.cols());
+    const size_t lda = A.rowdist();
+    const size_t ldb = B.rowdist();
+    const size_t ldc = C.rowdist();
+    for (size_t i = 0; i < A.rows(); ++i) {
+      for (size_t j = 0; j < B.cols(); ++j) {
+        T sum{};
+        for (size_t k = 0; k < A.cols(); ++k)
+          sum += A.data()[i*lda + k] * B.data()[k*ldb + j];
+        C.data()[i*ldc + j] = sum;
+      }
+    }
+    return C;
+  }
+
   // Ausgabe
   template <typename T>
   std::ostream& operator<<(std::ostream& os, const MatrixView<T>& M) {
